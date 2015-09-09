@@ -1,3 +1,9 @@
+# Your setting
+dev/js
+dist
+
+
+
 # gig-osx
 .DS_Store
 .AppleDouble
