@@ -22,13 +22,13 @@ add dev/index.html
 
 
 ```
-gulp server
+> gulp server
 ```
 
 browse 0.0.0.0:8080
 
 ```
-gulp release
+> gulp release
 ```
 
 
