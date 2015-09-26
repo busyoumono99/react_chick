@@ -1,17 +1,15 @@
-var React = require('react');
+import React from 'react';
 
-var Name = React.createClass({
-  getName : function(){
+export default class Name extends React.Component{
+  getName(){
     var name = this.props.name;
-    var result = 'Name is : ' + name;
+    var result = `Name is : ${name}`;
     return result;
-  },
-  render: function() {
+  }
+  render() {
     return (
       <span>{this.getName()}</span>
     );
   }
 
-});
-
-module.exports = Name;
+};

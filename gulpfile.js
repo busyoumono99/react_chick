@@ -18,10 +18,10 @@ gulp.task('build', function() {
   var source = require('vinyl-source-stream');
   var buffer = require('vinyl-buffer');
   var sourcemaps = require('gulp-sourcemaps');
-  var reactify = require('reactify');
+  var babelify = require('babelify');
 
   return browserify('./src/js/main.js', {debug: true})
-    .transform(reactify)
+    .transform(babelify)
     .bundle()
     .on('error', function(err){
       console.log(err);

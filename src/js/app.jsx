@@ -1,10 +1,9 @@
-var React = require('react');
-var Name = require('./name.jsx');
-var PropTypes = React.PropTypes;
+import React from 'react';
+import Name from './name.jsx';
 
-var App = React.createClass({
+export default class App extends React.Component{
 
-  render: function() {
+  render() {
     return (
       <div>
         <h1>React App!!!</h1>
@@ -13,6 +12,4 @@ var App = React.createClass({
     );
   }
 
-});
-
-module.exports = App;
+};
