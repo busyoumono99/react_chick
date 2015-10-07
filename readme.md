@@ -40,6 +40,7 @@ browse 0.0.0.0:8080
 ## Thanks
 [akabeko.me : browserify](http://akabeko.me/blog/2014/12/browserify/)  
 [akabeko.me : browserify sourcemap](http://akabeko.me/blog/2014/12/browserify-2-source-map/)  
+[akabeko.me : babelify](http://akabeko.me/blog/2015/04/babelify-es6/)  
 [masato](http://qiita.com/masato/items/35b0900e3a7282b33bf8)
 
 

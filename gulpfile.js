@@ -11,7 +11,23 @@ gulp.task('clean', function(cb){
 });
 
 /**
+ *  error to log and notify
+ *
+ */
+function handleErrors() {
+  var notify = require('gulp-notify');
+  var args = Array.prototype.slice.call(arguments);
+  notify.onError({
+    title: "Compile Error",
+    message: "<%= error.message %>"
+  }).apply(this, args);
+  console.log(args);
+  this.emit('end'); // Keep gulp from hanging on this task
+}
+
+/**
  *   Build the project. Generate development image in dev directory
+ *    --src | -s src file name. default 'main.js'
  */
 gulp.task('build', function() {
   var browserify = require('browserify');
@@ -19,19 +35,33 @@ gulp.task('build', function() {
   var buffer = require('vinyl-buffer');
   var sourcemaps = require('gulp-sourcemaps');
   var babelify = require('babelify');
+  var notify = require('gulp-notify');
+  var argv = require('minimist')(process.argv.slice(2));
 
-  return browserify('./src/js/main.js', {debug: true})
+  var src_file_path = '';
+  var src_root_path = './src/js/';
+  var target = '';
+  if(typeof argv.t !== "undefined" && argv.t != null){
+    target = argv.t;
+  } else if(typeof argv.target !== "undefined" && argv.target != null){
+    target = argv.target;
+  } else {
+    target = 'main.js';
+  }
+  src_file_path = src_root_path + target;
+
+  console.log(src_file_path);
+
+  return browserify(src_file_path, {debug: true})
     .transform(babelify)
     .bundle()
-    .on('error', function(err){
-      console.log(err);
-      this.emit('end');
-    })
-    .pipe(source('app.js'))
+    .on('error', handleErrors)
+    .pipe(source(target))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dev/js'));
+    .pipe(gulp.dest('./dev/js'))
+    .pipe(notify("End of build!"));
 });
 
 /**
@@ -58,13 +88,19 @@ gulp.task('release', ['clean', 'build'], function(){
  *  By watching the change of the code file, run the build, if necessary
  */
 gulp.task('watch', ['build'], function(){
-  gulp.watch(['./src/js/*.js', './src/js/*.jsx', '!./src/js/app.js'], ['build']);
+  // gulp.watch(['./src/js/*.js', './src/js/*.jsx', '!./src/js/app.js'], ['build']);
+  var watch_target_src = ['./src/js/*.js', './src/js/*.jsx', '!./src/js/app.js'];
+  var watch = require('gulp-watch');
+  watch(watch_target_src, function(){
+    gulp.start(['build']);
+  });
 });
 
 /**
  *  To start the HTTP server with a development folder to the root
  */
-gulp.task('server', ['watch'], function(){
+// gulp.task('server', ['watch'], function(){
+gulp.task('server', function(){
   var connect = require('connect');
   var serveStatic = require('serve-static');
 
