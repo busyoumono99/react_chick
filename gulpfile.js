@@ -26,6 +26,18 @@ function handleErrors() {
 }
 
 /**
+ *  get target
+ */
+function getTarget(args) {
+  if(typeof args.t !== "undefined" && args.t != null){
+    return args.t;
+  } else if(typeof args.target !== "undefined" && args.target != null){
+    return args.target;
+  }
+  return 'main.js';
+}
+
+/**
  *   Build the project. Generate development image in dev directory
  *    --src | -s src file name. default 'main.js'
  */
@@ -40,14 +52,7 @@ gulp.task('build', function() {
 
   var src_file_path = '';
   var src_root_path = './src/js/';
-  var target = '';
-  if(typeof argv.t !== "undefined" && argv.t != null){
-    target = argv.t;
-  } else if(typeof argv.target !== "undefined" && argv.target != null){
-    target = argv.target;
-  } else {
-    target = 'main.js';
-  }
+  var target = getTarget(argv);
   src_file_path = src_root_path + target;
 
   console.log(src_file_path);
