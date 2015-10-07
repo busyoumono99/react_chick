@@ -77,8 +77,17 @@ gulp.task('release', ['clean', 'build'], function(){
   var usemin = require('gulp-usemin');
   var uglify = require('gulp-uglify');
 
+  var argv = require('minimist')(process.argv.slice(2));
+
+  var dev_file_path = '';
+  var dev_root_path = './dev/js/';
+  var target = getTarget(argv);
+  dev_file_path = dev_root_path + target;
+
+  console.log(dev_file_path);
+
   gulp.src('./src/img/**').pipe(gulp.dest('./dist/img'));
-  gulp.src('./dev/js/app.js')
+  gulp.src(dev_file_path)
   .pipe(uglify())
   .pipe(gulp.dest('./dist/js'));
 
