@@ -9,7 +9,8 @@
   "author": "busyoumono99",
   "license": "MIT",
   "dependencies": {
-    "react": "^0.13.3"
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
     "babelify": "^6.3.0",
